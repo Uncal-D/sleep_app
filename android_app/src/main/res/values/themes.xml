@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.SleepApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary_variant</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- 设置主界面背景为白色 -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- Customize your theme here. -->
+    </style>
+    
+    <style name="Theme.SleepApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    
+    <style name="Theme.SleepApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    
+    <style name="Theme.SleepApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources> 

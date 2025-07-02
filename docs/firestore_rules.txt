@@ -1,0 +1,56 @@
+# [Firebase Firestore 安全规则]
+# 更新时间：2024-06-27
+# 说明：本规则适用于睡眠积分奖励App（App端+Web后台），如有数据结构或权限变更请及时同步修改。
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 用户只能访问自己的数据
+    match /users/{userId} {
+      allow read: if isAdmin() || (request.auth != null && request.auth.uid == userId);
+      allow write: if isAdmin();
+    }
+
+    // 管理员集合，只允许本人读写
+    match /admins/{adminId} {
+      allow read, write: if request.auth != null && request.auth.uid == adminId;
+    }
+
+    // 商品，所有登录用户可读，只有管理员可写
+    match /products/{productId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    // 兑换记录，只允许本人读写
+    match /redemptions/{docId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+
+    // 积分流水，只允许本人读写
+    match /points_history/{docId} {
+      allow read: if isAdmin() || (request.auth != null && request.auth.uid == resource.data.userId);
+      allow write: if isAdmin();
+    }
+
+    // 睡眠记录，只允许本人读写
+    match /sleep_records/{docId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+
+    // 其他集合默认拒绝
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 判断是否为管理员
+    function isAdmin() {
+      // 只要admins集合下有当前uid文档即为管理员
+      return exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+  }
+}
+
+# 修改记录：
+# [2024-06-27] 初始版本，支持App端与Web后台权限分离，管理员通过admins集合判断。 

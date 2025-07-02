@@ -1,0 +1,20 @@
+// 项目根目录 build.gradle
+buildscript {
+    // 定义 Kotlin 版本
+    ext.kotlin_version = '1.8.22' // 推荐使用最新稳定版
+    
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Android Gradle 插件
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        
+        // Kotlin 插件（必须添加）
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        
+        // Google 服务插件（必须添加）
+        classpath 'com.google.gms:google-services:4.4.0'
+    }
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">睡眠积分奖励App</string>
+    
+    <!-- 登录注册 -->
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="email">邮箱</string>
+    <string name="password">密码</string>
+    <string name="phone">手机号</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="forgot_password">忘记密码？</string>
+    <string name="no_account">没有账号？去注册</string>
+    <string name="have_account">已有账号？去登录</string>
+    
+    <!-- 引导页 -->
+    <string name="onboarding_title">设置你的睡眠时间</string>
+    <string name="sleep_time">睡觉时间</string>
+    <string name="wake_time">起床时间</string>
+    <string name="start">开始使用</string>
+    <string name="welcome_message">欢迎回来，请登录</string>
+    
+    <!-- 主页 -->
+    <string name="home">主页</string>
+    <string name="stats">统计</string>
+    <string name="shop">商城</string>
+    <string name="settings">设置</string>
+    <string name="current_points">当前积分</string>
+    <string name="current_streak">连续天数</string>
+    <string name="sleep_status">睡眠状态</string>
+    <string name="sleep_soon">即将睡觉</string>
+    <string name="sleeping">睡眠中</string>
+    <string name="awake">清醒</string>
+    
+    <!-- 商城 -->
+    <string name="shop_title">积分商城</string>
+    <string name="redeem">兑换</string>
+    <string name="not_enough_points">积分不足</string>
+    <string name="redeem_success">兑换成功</string>
+    
+    <!-- 设置 -->
+    <string name="settings_title">设置</string>
+    <string name="edit_sleep_time">修改睡眠时间</string>
+    <string name="notification">通知设置</string>
+    <string name="logout">退出登录</string>
+    <string name="about">关于我们</string>
+    
+    <!-- 通知 -->
+    <string name="sleep_reminder">该睡觉了!</string>
+    <string name="wake_reminder">该起床了!</string>
+    <string name="earned_points">获得积分: +%1$d</string>
+    <string name="streak_bonus">连续奖励: +%1$d</string>
+    
+    <!-- 错误信息 -->
+    <string name="error_login">登录失败，请检查邮箱和密码</string>
+    <string name="error_register">注册失败，请重试</string>
+    <string name="error_network">网络连接失败</string>
+    <string name="error_permission">需要使用统计权限来监控睡眠</string>
+    <string name="error_user_not_found">账号不存在，请先注册</string>
+</resources> 

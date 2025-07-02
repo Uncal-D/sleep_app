@@ -1,0 +1,143 @@
+项目文件架构如下：
+
+sleep_app/
+├── sleep_app_html/
+│   ├── src/
+│   │   ├── services/
+│   │   │   └── firebase.ts
+│   │   ├── pages/
+│   │   │   ├── Users/
+│   │   │   │   └── UserList.tsx
+│   │   │   ├── Shop/
+│   │   │   │   └── ShopList.tsx
+│   │   │   ├── Points/
+│   │   │   │   └── PointsHistoryPage.tsx
+│   │   │   ├── Dashboard/
+│   │   │   │   └── DashboardPage.tsx
+│   │   │   └── Auth/
+│   │   │       └── LoginPage.tsx
+│   │   ├── App.tsx
+│   │   └── index.tsx
+│   ├── public/
+│   │   └── index.html
+│   ├── node_modules/
+│   ├── build/
+│   │   ├── static/
+│   │   │   ├── js/
+│   │   │   │   ├── main.a3f74c15.js
+│   │   │   │   ├── main.a3f74c15.js.map
+│   │   │   │   └── main.a3f74c15.js.LICENSE.txt
+│   │   │   └── css/
+│   │   │       ├── main.d802e3cd.css
+│   │   │       └── main.d802e3cd.css.map
+│   │   ├── asset-manifest.json
+│   │   └── index.html
+│   ├── fix_firestore_schema.js
+│   ├── fix_users_status_sleepseatus_points.js
+│   ├── serviceAccountKey.json
+│   ├── rules.txt
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── progress.md
+│   └── tsconfig.json
+├── node_modules/
+├── gradle/
+│   └── wrapper/
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── build/
+│   ├── reports/
+│   │   └── problems/
+│   │       └── problems-report.html
+│   └── kotlin/
+│       └── sessions/
+├── app/
+│   ├── src/
+│   │   └── main/
+│   │       ├── res/
+│   │       ├── java/
+│   │       │   └── com/
+│   │       │       └── example/
+│   │       │           └── sleepapp/
+│   │       │               ├── utils/
+│   │       │               │   ├── AlarmHelper.kt
+│   │       │               │   ├── UsageStatsHelper.kt
+│   │       │               │   └── TimeUtils.kt
+│   │       │               ├── ui/
+│   │       │               │   ├── viewmodel/
+│   │       │               │   │   ├── UserViewModel.kt
+│   │       │               │   │   └── SleepViewModel.kt
+│   │       │               │   ├── stats/
+│   │       │               │   │   ├── StatsFragment.kt
+│   │       │               │   │   └── StatsViewModel.kt
+│   │       │               │   ├── shop/
+│   │       │               │   │   ├── ShopFragment.kt
+│   │       │               │   │   ├── RedeemDialogFragment.kt
+│   │       │               │   │   ├── ShopViewModel.kt
+│   │       │               │   │   ├── ProductAdapter.kt
+│   │       │               │   │   └── ShopActivity.kt
+│   │       │               │   ├── onboarding/
+│   │       │               │   │   └── OnboardingActivity.kt
+│   │       │               │   ├── home/
+│   │       │               │   │   ├── HomeFragment.kt
+│   │       │               │   │   └── HomeViewModel.kt
+│   │       │               │   └── auth/
+│   │       │               │       ├── LoginActivity.kt
+│   │       │               │       └── RegisterActivity.kt
+│   │       │               ├── service/
+│   │       │               │   ├── AlarmReceiver.kt
+│   │       │               │   ├── SleepMonitorService.kt
+│   │       │               │   ├── DailyCheckWorker.kt
+│   │       │               │   └── BootReceiver.kt
+│   │       │               ├── data/
+│   │       │               │   ├── repository/
+│   │       │               │   │   ├── UserRepository.kt
+│   │       │               │   │   ├── SleepRepositoryImpl.kt
+│   │       │               │   │   └── SleepRepository.kt
+│   │       │               │   ├── model/
+│   │       │               │   │   ├── Product.kt
+│   │       │               │   │   ├── User.kt
+│   │       │               │   │   └── SleepRecord.kt
+│   │       │               │   └── local/
+│   │       │               │       ├── entity/
+│   │       │               │       │   ├── SleepRecordEntity.kt
+│   │       │               │       │   └── UserEntity.kt
+│   │       │               │       ├── dao/
+│   │       │               │       │   ├── SleepRecordDao.kt
+│   │       │               │       │   └── UserDao.kt
+│   │       │               │       ├── TestDataGenerator.kt
+│   │       │               │       └── AppDatabase.kt
+│   │       │               └── SleepApp.kt
+│   │       └── AndroidManifest.xml
+│   ├── build/
+│   │   ├── tmp/
+│   │   ├── snapshot/
+│   │   ├── outputs/
+│   │   └── kotlin/
+│   │       ├── kaptGenerateStubsDebugKotlin/
+│   │       └── compileDebugKotlin/
+│   ├── google-services.json
+│   └── build.gradle
+├── .vscode/
+├── .idea/
+├── .gradle/
+├── .git/
+├── .cursor/
+├── README.md
+├── 使用说明.txt
+├── notice.md
+├── SQL.md
+├── thinks.txt
+├── package-lock.json
+├── package.json
+├── rules.txt
+├── .gitignore
+├── google-services.json
+├── 0627.txt
+├── gradle.properties
+├── build.gradle
+├── gradlew.bat
+├── gradlew
+├── settings.gradle
+├── local.properties
+├── me.txt 

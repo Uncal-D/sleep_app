@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. 定义管理员检查函数
+    function isAdmin() {
+      // 检查当前用户UID是否存在于admins集合中
+      return exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    // 2. 管理员集合规则
+    match /admins/{adminId} {
+      // 允许管理员读写自己的文档
+      allow read, write: if request.auth != null && request.auth.uid == adminId;
+    }
+    
+    // 3. 全局规则 - 只允许管理员访问所有数据
+    match /{document=**} {
+      allow read, write: if isAdmin(); // 使用上面定义的函数
+    }
+  }
+}
