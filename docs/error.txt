@@ -1,0 +1,217 @@
+2025-07-16 14:24:53.567  1685-30154 ActivityManager         system_server                        E  ANR in com.example.sleepapp (com.example.sleepapp/.ui.MainActivity)
+                                                                                                    PID: 29832
+                                                                                                    Reason: Input dispatching timed out (7c05ead com.example.sleepapp/com.example.sleepapp.ui.MainActivity (server) is not responding. Waited 8001ms for MotionEvent(action=DOWN))
+                                                                                                    Parent: com.example.sleepapp/.ui.MainActivity
+                                                                                                    ErrorId: f61d4ef0-0f76-430e-b150-a19ea97d429e
+                                                                                                    Frozen: false
+                                                                                                    Load: 14.07 / 14.77 / 14.06
+                                                                                                    ----- Output from /proc/pressure/memory -----
+                                                                                                    some avg10=0.00 avg60=0.13 avg300=0.29 total=1256858486
+                                                                                                    full avg10=0.00 avg60=0.04 avg300=0.10 total=534026862
+                                                                                                    ----- End output from /proc/pressure/memory -----
+                                                                                                    ----- Output from /proc/pressure/cpu -----
+                                                                                                    some avg10=5.89 avg60=7.85 avg300=9.04 total=65816786958
+                                                                                                    ----- End output from /proc/pressure/cpu -----
+                                                                                                    ----- Output from /proc/pressure/io -----
+                                                                                                    some avg10=0.16 avg60=0.73 avg300=1.31 total=7926438755
+                                                                                                    full avg10=0.14 avg60=0.40 avg300=0.69 total=5845105352
+                                                                                                    ----- End output from /proc/pressure/io -----
+                                                                                                    
+                                                                                                    CPU usage from 1ms to 17001ms later (2025-07-16 14:24:36.244 to 2025-07-16 14:24:53.243):
+                                                                                                      51% 16902/com.tencent.mm: 29% user + 21% kernel / faults: 27340 minor 1391 major
+                                                                                                        40% 16914/Signal Catcher: 22% user + 18% kernel
+                                                                                                        2.7% 16962/Profile Saver: 2.6% user + 0.1% kernel
+                                                                                                        2% 17058/[GT]ColdPool#11: 0.7% user + 1.2% kernel
+                                                                                                        1.2% 17027/[GT]ColdPool#4: 1% user + 0.1% kernel
+                                                                                                        0.6% 23794/binder:16902_10: 0.5% user + 0% kernel
+                                                                                                        0.5% 16915/Jit thread pool: 0.3% user + 0.1% kernel
+                                                                                                        0.5% 16902/com.tencent.mm: 0.3% user + 0.1% kernel
+                                                                                                        0.3% 17026/[GT]ColdPool#3: 0.3% user + 0% kernel
+                                                                                                        0.1% 17063/[D]#worker: 0% user + 0% kernel
+                                                                                                        0.1% 17132/mars::17132: 0% user + 0% kernel
+                                                                                                        0.1% 18063/TVKDL-Timer: 0% user + 0% kernel
+                                                                                                        0% 12867/binder:16902_E: 0% user + 0% kernel
+                                                                                                        0% 16996/[GT]TP#Internal: 0% user + 0% kernel
+                                                                                                        0% 17000/[GT]HotPool#1: 0% user + 0% kernel
+                                                                                                        0% 17012/[GT]HotPool#2: 0% user + 0% kernel
+                                                                                                        0% 17013/[GT]HotPool#3: 0% user + 0% kernel
+                                                                                                        0% 17014/[GT]HotPool#4: 0% user + 0% kernel
+                                                                                                        0% 17031/[GT]ColdPool#5: 0% user + 0% kernel
+                                                                                                        0% 17033/[GT]ColdPool#7: 0% user + 0% kernel
+                                                                                                        0% 17079/[GT]ColdPool#14: 0% user + 0% kernel
+                                                                                                        0% 17106/mars::baseevent: 0% user + 0% kernel
+                                                                                                        0% 17112/[GT]HotPool#7: 0% user + 0% kernel
+                                                                                                        0% 17133/mars::baseevent: 0% user + 0% kernel
+                                                                                                        0% 17255/wc_srvinit_8: 0% user + 0% kernel
+                                                                                                        0% 17256/mmcronet::quic:: 0% user + 0% kernel
+                                                                                                        0% 17291/mali-event-hand: 0% user + 0% kernel
+                                                                                                        0% 17296/TP-ShareThreadP: 0% user + 0% kernel
+                                                                                                        0% 17370/IPCThreadPool#T: 0% user + 0% kernel
+                                                                                                        0% 17392/default_matrix_: 0% user + 0% kernel
+                                                                                                        0% 18061/TVKDL-LServer: 0% user + 0% kernel
+                                                                                                        0% 18327/binder:16902_7: 0% user + 0% kernel
+                                                                                                        0% 21288/thread_watchdog: 0% user + 0% kernel
+                                                                                                        0% 28920/[GT]ColdPool#17: 0% user + 0% kernel
+                                                                                                       +0% 30163/Check-ANR-State: 0% user + 0% kernel
+                                                                                                      34% 22005/com.tencent.mm: 19% user + 15% kernel / faults: 15062 minor 1286 major
+                                                                                                        32% 22013/Signal Catcher: 18% user + 14% kernel
+                                                                                                        0% 3873/MetricsManager: 0% user + 0% kernel
+                                                                                                        0% 9561/XNet: 0% user + 0% kernel
+                                                                                                        0% 13015/JSLag Monitor: 0% user + 0% kernel
+                                                                                                        0% 14833/ThreadPoolSingl: 0% user + 0% kernel
+                                                                                                        0% 15542/TVKDL-Timer: 0% user + 0% kernel
+                                                                                                        0% 22005/com.tencent.mm: 0% user + 0% kernel
+                                                                                                        0% 22117/[GT]TP#Internal: 0% user + 0% kernel
+                                                                                                        0% 22156/[GT]HotPool#2: 0% user + 0% kernel
+                                                                                                        0% 22164/[GT]HotPool#6: 0% user + 0% kernel
+                                                                                                        0% 22199/[GT]ColdPool#7: 0% user + 0% kernel
+                                                                                                        0% 22680/Callbacker: 0% user + 0% kernel
+                                                                                                        0% 23072/mars::smc: 0% user + 0% kernel
+                                                                                                       +0% 30192/Check-ANR-State: 0% user + 0% kernel
+                                                                                                       +0% 30193/xh_refresh_loop: 0% user + 0% kernel
+                                                                                                      26% 1685/system_server: 9.3% user + 17% kernel / faults: 6605 minor 725 major
+                                                                                                        4.1% 1714/Signal Catcher: 2.3% user + 1.8% kernel
+                                                                                                        3.8% 30154/AnrConsumer: 0.7% user + 3.1% kernel
+                                                                                                        1.1% 6890/binder:1685_20: 0.7% user + 0.4% kernel
+                                                                                                        0.6% 6213/binder:1685_1D: 0.4% user + 0.2% kernel
+                                                                                                        0.5% 1685/system_server: 0.2% user + 0.2% kernel
+                                                                                                        0.2% 1750/android.bg: 0% user + 0.2% kernel
+2025-07-16 14:24:53.567  1685-30154 ActivityManager         system_server                        E      0.2% 2028/InputDispatcher: 0.1% user + 0.1% kernel
+                                                                                                        0.2% 2067/NetworkDetectIn: 0% user + 0.1% kernel
+                                                                                                        0.1% 1753/ActivityManager: 0.1% user + 0% kernel
+                                                                                                        0.1% 1761/batterystats-ha: 0.1% user + 0% kernel
+                                                                                                        0.1% 1978/eduling.default: 0.1% user + 0% kernel
+                                                                                                        0.1% 2029/InputReader: 0.1% user + 0% kernel
+                                                                                                        0.1% 6214/binder:1685_1E: 0.1% user + 0% kernel
+                                                                                                        0.1% 6217/binder:1685_1F: 0.1% user + 0% kernel
+                                                                                                        0.1% 1738/android.ui: 0% user + 0% kernel
+                                                                                                        0.1% 1760/OomAdjuster: 0% user + 0% kernel
+                                                                                                        0.1% 1779/PowerManagerSer: 0% user + 0% kernel
+                                                                                                        0.1% 2056/NetworkStats: 0.1% user + 0% kernel
+                                                                                                        0.1% 2119/SchedBoostServi: 0% user + 0% kernel
+                                                                                                        0.1% 2127/SmartPowerServi: 0% user + 0% kernel
+                                                                                                        0% 1740/android.display: 0% user + 0% kernel
+                                                                                                        0% 1773/CriticalEventLo: 0% user + 0% kernel
+                                                                                                        0% 1955/binder:1685_3: 0% user + 0% kernel
+                                                                                                        0% 1975/SensorService: 0% user + 0% kernel
+                                                                                                        0% 1997/CachedAppOptimi: 0% user + 0% kernel
+                                                                                                        0% 2007/miui-gesture: 0% user + 0% kernel
+                                                                                                        0% 2030/HwBinder:1685_2: 0% user + 0% kernel
+                                                                                                        0% 2042/android.imms: 0% user + 0% kernel
+                                                                                                        0% 2047/StorageManagerS: 0% user + 0% kernel
+                                                                                                        0% 2072/EthernetService: 0% user + 0% kernel
+                                                                                                        0% 2093/AudioPortEventH: 0% user + 0% kernel
+                                                                                                        0% 2097/MediaFocusContr: 0% user + 0% kernel
+                                                                                                        0% 2121/fboSocketThread: 0% user + 0% kernel
+                                                                                                        0% 2129/SmartPowerDispl: 0% user + 0% kernel
+                                                                                                        0% 2187/CameraBooster: 0% user + 0% kernel
+                                                                                                        0% 3736/binder:1685_14: 0% user + 0% kernel
+                                                                                                        0% 3737/binder:1685_15: 0% user + 0% kernel
+                                                                                                        0% 26245/dex_metadata_as: 0% user + 0% kernel
+                                                                                                        0% 26588/first_use_threa: 0% user + 0% kernel
+                                                                                                      3.9% 2446/com.android.phone: 2.3% user + 1.5% kernel / faults: 2256 minor 589 major
+                                                                                                        1.8% 2460/Signal Catcher: 1.1% user + 0.7% kernel
+                                                                                                        1% 2446/m.android.phone: 0.6% user + 0.3% kernel
+                                                                                                        0.1% 2740/HwBinder:2446_1: 0.1% user + 0% kernel
+                                                                                                        0.1% 2870/android.bg: 0% user + 0% kernel
+                                                                                                        0.1% 2950/NetworkSpeedTra: 0% user + 0% kernel
+                                                                                                        0.1% 3618/binder:2446_F: 0.1% user + 0% kernel
+                                                                                                        0% 2481/binder:2446_3: 0% user + 0% kernel
+                                                                                                        0% 2806/ConnectivityThr: 0% user + 0% kernel
+                                                                                                        0% 3516/CatServiceThrea: 0% user + 0% kernel
+                                                                                                        0% 3619/binder:2446_10: 0% user + 0% kernel
+                                                                                                        0% 3650/NetworkService: 0% user + 0% kernel
+                                                                                                        0% 32569/RenderThread: 0% user + 0% kernel
+                                                                                                      2.9% 2455/com.android.systemui: 1.5% user + 1.3% kernel / faults: 2083 minor 424 major
+                                                                                                        1.1% 2488/Signal Catcher: 0.5% user + 0.5% kernel
+                                                                                                        0.6% 2905/RenderThread: 0.3% user + 0.2% kernel
+                                                                                                        0.4% 2455/ndroid.systemui: 0.3% user + 0% kernel
+                                                                                                        0.2% 3589/mali-mem-purge: 0.1% user + 0% kernel
+                                                                                                        0.1% 2890/SysUiBg: 0.1% user + 0% kernel
+                                                                                                        0.1% 3261/binder:2455_8: 0% user + 0% kernel
+                                                                                                        0% 2490/perfetto_hprof_: 0% user + 0% kernel
+                                                                                                        0% 3587/mali-event-hand: 0% user + 0% kernel
+                                                                                                        0% 3591/ged-swd: 0% user + 0% kernel
+                                                                                                        0% 7643/binder:2455_E: 0% user + 0% kernel
+                                                                                                        0% 16740/binder:2455_10: 0% user + 0% kernel
+                                                                                                      1.8% 7015/com.iflytek.inputmethod: 1% user + 0.8% kernel / faults: 1282 minor 464 major
+                                                                                                        1.7% 7133/Signal Catcher: 0.9% user + 0.7% kernel
+                                                                                                        0% 7209/binder:7015_3: 0% user + 0% kernel
+                                                                                                        0% 7469/nputmethod.sync: 0% user + 0% kernel
+                                                                                                        0% 26385/glide-disk-cach: 0% user + 0% kernel
+                                                                                                      1.7% 1013/surfaceflinger: 1% user + 0.6% kernel / faults: 112 minor
+                                                                                                        0.5% 1013/surfaceflinger: 0.4% user + 0.1% kernel
+                                                                                                        0.2% 1226/mali-mem-purge: 0.1% user + 0% kernel
+                                                                                                        0.1% 1183/RenderEngine: 0.1% user + 0% kernel
+                                                                                                        0.1% 1236/HwBinder:1013_1: 0% user + 0.1% kernel
+                                                                                                        0.1% 1273/app: 0% user + 0.1% kernel
+                                                                                                        0.1% 1275/RegionSampling: 0% user + 0% kernel
+                                                                                                        0.1% 2019/binder:1013_5: 0% user + 0.1% kernel
+                                                                                                        0% 1225/mali-event-hand: 0% user + 0% kernel
+                                                                                                        0% 1276/RegSampIdle: 0% user + 0% kernel
+                                                                                                        0% 1278/surfaceflinger: 0% user + 0% kernel
+                                                                                                        0% 1726/RelBufCB: 0% user + 0% kernel
+                                                                                                        0% 2180/TimerDispatch: 0% user + 0% kernel
+                                                                                                      0% 22816/com.miui.securityinputmethod: 0% user + 0% kernel / faults: 1039 minor 920 major
+2025-07-16 14:24:53.568  1685-30154 ActivityManager         system_server                        E      0% 22826/Signal Catcher: 0% user + 0% kernel
+                                                                                                        0% 23123/binder:22816_6: 0% user + 0% kernel
+                                                                                                      1.1% 1229/adbd: 0.4% user + 0.7% kernel / faults: 107 minor
+                                                                                                        0.6% 29113/UsbFfs-worker: 0.2% user + 0.4% kernel
+                                                                                                        0.5% 1229/adbd: 0.2% user + 0.2% kernel
+                                                                                                      1.1% 423/logd: 0.4% user + 0.7% kernel / faults: 439 minor
+                                                                                                        0.7% 442/logd.writer: 0.4% user + 0.3% kernel
+                                                                                                        0.2% 29151/logd.reader.per: 0% user + 0.2% kernel
+                                                                                                    19% TOTAL: 8.9% user + 9.1% kernel + 0.2% iowait + 0.5% irq + 0.3% softirq
+                                                                                                    CPU usage from 1552ms to 3067ms later (2025-07-16 14:24:37.794 to 2025-07-16 14:24:39.309):
+                                                                                                      93% 1685/system_server: 33% user + 59% kernel / faults: 2024 minor
+                                                                                                        81% 30157/AnrAuxiliaryTas: 28% user + 52% kernel
+                                                                                                        4.9% 30154/AnrConsumer: 0.8% user + 4% kernel
+                                                                                                        1.6% 6890/binder:1685_20: 1.6% user + 0% kernel
+                                                                                                        0.8% 1978/eduling.default: 0.8% user + 0% kernel
+                                                                                                      45% 16902/com.tencent.mm: 18% user + 26% kernel / faults: 202 minor
+                                                                                                        42% 17058/[GT]ColdPool#11: 15% user + 26% kernel
+                                                                                                        1.3% 16915/Jit thread pool: 1.3% user + 0% kernel
+                                                                                                      16% 4694/com.android.nfc: 10% user + 6.4% kernel / faults: 824 minor 626 major
+                                                                                                        14% 4704/Signal Catcher: 9.2% user + 5.5% kernel
+                                                                                                        0.9% 5196/binder:4694_A: 0.9% user + 0% kernel
+                                                                                                      12% 4782/com.miui.face: 6.5% user + 5.6% kernel / faults: 937 minor 755 major
+                                                                                                        11% 4894/Signal Catcher: 6.5% user + 4.6% kernel
+                                                                                                        0.9% 5252/serv_worker: 0% user + 0.9% kernel
+                                                                                                      9.2% 4740/com.xiaomi.xmsfkeeper: 4.6% user + 4.6% kernel / faults: 509 minor 635 major
+                                                                                                        9.2% 4829/Signal Catcher: 4.6% user + 4.6% kernel
+                                                                                                        0.9% 28266/binder:4740_9: 0% user + 0.9% kernel
+                                                                                                        0.9% 30884/binder:4740_5: 0% user + 0.9% kernel
+                                                                                                      8.3% 4699/com.xiaomi.touchservice: 4.6% user + 3.6% kernel / faults: 503 minor 473 major
+                                                                                                        7.3% 4735/Signal Catcher: 3.6% user + 3.6% kernel
+                                                                                                        0.9% 4739/perfetto_hprof_: 0% user + 0.9% kernel
+                                                                                                      8.3% 4705/system: 4.6% user + 3.7% kernel / faults: 382 minor 499 major
+                                                                                                        7.4% 4765/Signal Catcher: 4.6% user + 2.7% kernel
+                                                                                                      8.3% 4770/org.mipay.android.manager: 3.7% user + 4.6% kernel / faults: 419 minor 640 major
+                                                                                                        8.3% 4789/Signal Catcher: 3.7% user + 4.6% kernel
+                                                                                                      7.4% 4744/com.mediatek.voicecommand: 4.6% user + 2.7% kernel / faults: 423 minor 602 major
+                                                                                                        6.5% 4780/Signal Catcher: 4.6% user + 1.8% kernel
+                                                                                                        0.9% 4800/perfetto_hprof_: 0% user + 0.9% kernel
+                                                                                                      6.5% 4742/com.tencent.soter.soterserver: 3.7% user + 2.7% kernel / faults: 451 minor 673 major
+                                                                                                        6.5% 4808/Signal Catcher: 3.7% user + 2.7% kernel
+                                                                                                      3.6% 4686/com.miui.daemon: 1.8% user + 1.8% kernel / faults: 408 minor 438 major
+                                                                                                        2.7% 4710/Signal Catcher: 1.8% user + 0.9% kernel
+                                                                                                      3.7% 4715/org.ifaa.aidl.manager: 3.7% user + 0% kernel / faults: 440 minor 564 major
+                                                                                                        3.7% 4749/Signal Catcher: 2.7% user + 0.9% kernel
+                                                                                                      3.7% 4752/com.trustonic.teeservice: 1.8% user + 1.8% kernel / faults: 125 minor 158 major
+                                                                                                        1.8% 4914/Signal Catcher: 0.9% user + 0.9% kernel
+                                                                                                      1.3% 242/disp_feature:0: 0% user + 1.3% kernel
+                                                                                                      1.3% 423/logd: 0% user + 1.3% kernel / faults: 11 minor
+                                                                                                        1.3% 442/logd.writer: 0.6% user + 0.6% kernel
+                                                                                                        0.6% 29151/logd.reader.per: 0% user + 0.6% kernel
+                                                                                                      1.5% 955/android.hardware.memtrack-service.mediatek: 0% user + 1.5% kernel
+                                                                                                      1.5% 1013/surfaceflinger: 0% user + 1.5% kernel / faults: 9 minor
+                                                                                                        0.7% 1013/surfaceflinger: 0% user + 0.7% kernel
+                                                                                                        0.7% 1273/app: 0% user + 0.7% kernel
+                                                                                                        0.7% 2180/TimerDispatch: 0.7% user + 0% kernel
+                                                                                                      1.5% 1229/adbd: 0% user + 1.5% kernel
+                                                                                                        1.5% 1229/adbd: 0.7% user + 0.7% kernel
+                                                                                                        1.5% 29113/UsbFfs-worker: 0.7% user + 0.7% kernel
+                                                                                                      1.7% 2446/com.android.phone: 0.8% user + 0.8% kernel / faults: 47 minor
+                                                                                                      0.6% 13/rcu_preempt: 0% user + 0.6% kernel
+                                                                                                      0.6% 238/irq/217-1120100: 0% user + 0.6% kernel
+                                                                                                      0.6% 425/servicemanager: 0% user + 0.6% kernel

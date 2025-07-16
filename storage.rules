@@ -1,0 +1,21 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // 头像上传规则
+    match /avatars/{allPaths=**} {
+      allow read: if true; // 所有人都可以读取头像
+      allow write: if request.auth != null; // 只有登录用户可以上传头像
+    }
+    
+    // 商品图片上传规则
+    match /products/{allPaths=**} {
+      allow read: if true; // 所有人都可以读取商品图片
+      allow write: if request.auth != null; // 只有登录用户可以上传商品图片
+    }
+    
+    // 默认拒绝其他所有访问
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -4,21 +4,21 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
-    // 添加分辨率策略确保使用正确版本的插件
+    // 更新插件版本策略
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id == 'com.android.application') {
-                useModule("com.android.tools.build:gradle:7.4.2")
+                useModule("com.android.tools.build:gradle:8.2.2")
             }
             if (requested.id.id.startsWith('org.jetbrains.kotlin.')) {
-                useVersion("1.8.22") // 与根build.gradle中的版本一致
+                useVersion("1.9.22") // 与根build.gradle中的版本一致
             }
         }
     }
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()

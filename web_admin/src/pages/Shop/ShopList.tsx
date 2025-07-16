@@ -333,7 +333,7 @@ const ShopList: React.FC = () => {
         </Form>
       </Modal>
       <Modal open={batchPriceModal} title="批量修改积分" onCancel={()=>setBatchPriceModal(false)} onOk={handleBatchPrice} okText="保存" cancelText="取消">
-        <InputNumber min={1} value={batchPrice} onChange={v=>setBatchPrice(Number(v))} style={{width:200}} placeholder="请输入新积分" />
+        <InputNumber min={1} value={batchPrice} onChange={(v: any)=>setBatchPrice(Number(v))} style={{width:200}} placeholder="请输入新积分" />
       </Modal>
     </div>
   );

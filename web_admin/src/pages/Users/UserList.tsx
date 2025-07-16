@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, Button, Modal, Descriptions, Tabs, Input, Select, Tooltip, Form, InputNumber, DatePicker, message, Popconfirm } from 'antd';
-import { db, auth } from '../../services/firebase';
+import { Table, Button, Modal, Descriptions, Tabs, Input, Select, Tooltip, Form, InputNumber, DatePicker, message, Popconfirm, Upload } from 'antd';
+import { db, auth, storage } from '../../services/firebase';
 import { collection, getDocs, query, where, updateDoc, doc, addDoc, serverTimestamp } from 'firebase/firestore';
-import { ReloadOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ReloadOutlined, EditOutlined, LockOutlined, UploadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { updatePassword, getAuth } from 'firebase/auth';
 
@@ -61,6 +62,28 @@ const UserList: React.FC = () => {
   const [resetPwdModal, setResetPwdModal] = useState(false);
   const [resetPwdUser, setResetPwdUser] = useState<User | null>(null);
   const [newPwd, setNewPwd] = useState('');
+  const [avatarUploading, setAvatarUploading] = useState(false);
+
+  // 头像上传函数
+  const handleAvatarUpload = async (file: any) => {
+    setAvatarUploading(true);
+    try {
+      const storageRef = ref(storage, `avatars/${Date.now()}_${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+
+      // 更新表单中的头像URL
+      editForm.setFieldsValue({ avatar: downloadURL });
+      message.success('头像上传成功');
+      return false; // 阻止默认上传行为
+    } catch (error) {
+      message.error('头像上传失败');
+      console.error('Upload error:', error);
+    } finally {
+      setAvatarUploading(false);
+    }
+    return false;
+  };
 
   const fetchUsers = useCallback(async () => {
     setLoading(true);
@@ -92,7 +115,7 @@ const UserList: React.FC = () => {
     fetchUsers();
   }, [fetchUsers]);
 
-  const filteredUsers = users.filter(user => {
+  const filteredUsers = users.filter((user: any) => {
     const matchSearch =
       user.email.toLowerCase().includes(searchValue.toLowerCase()) ||
       user.id.toLowerCase().includes(searchValue.toLowerCase());
@@ -211,40 +234,55 @@ const UserList: React.FC = () => {
     if (!selectedUser) return;
     const values = await editForm.validateFields();
     try {
+      console.log('开始更新用户信息:', selectedUser.id, values);
+
       // 计算积分变动
       const oldPoints = selectedUser.points || 0;
       const newPoints = values.points;
       const diff = newPoints - oldPoints;
-      // 更新用户信息，积分同步写入数据库
-      await updateDoc(doc(db, 'users', selectedUser.id), {
+
+      // 准备更新数据，使用正确的字段名称
+      const updateData: any = {
         points: newPoints,
-        status: values.status || '启用',
-        sleepStatus: values.sleepStatus || '未知',
-        avatar: values.avatar || '',
-        nickname: values.nickname || '',
-        phone: values.phone || '',
-        gender: values.gender || '',
-        birthday: values.birthday ? values.birthday.format('YYYY-MM-DD') : '',
-      });
+        updatedAt: serverTimestamp(),
+      };
+
+      // 只更新有值的字段
+      if (values.status) updateData.status = values.status;
+      if (values.sleepStatus) updateData.sleepStatus = values.sleepStatus;
+      if (values.avatar) updateData.avatar = values.avatar;
+      if (values.nickname) updateData.nickname = values.nickname;
+      if (values.phone) updateData.phone = values.phone;
+      if (values.gender) updateData.gender = values.gender;
+      if (values.birthday) updateData.birthday = values.birthday.format('YYYY-MM-DD');
+
+      console.log('更新数据:', updateData);
+
+      // 更新用户信息
+      await updateDoc(doc(db, 'users', selectedUser.id), updateData);
+      console.log('用户信息更新成功');
+
       // 如果积分有变动，插入积分流水
       if (diff !== 0) {
-        await addDoc(collection(db, 'points_history'), {
+        console.log('添加积分流水:', diff);
+        await addDoc(collection(db, 'pointsHistory'), {
           userId: selectedUser.id,
           points: diff,
           type: 'manual',
-          reason: '管理员手动修改',
+          description: '管理员手动修改',
           operatorId: auth.currentUser?.uid || '',
-          timestamp: serverTimestamp(),
           createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
         });
+        console.log('积分流水添加成功');
       }
+
       message.success('用户信息已更新');
       setEditModalVisible(false);
       // 立即刷新用户列表，确保前端展示与数据库一致
-      fetchUsers();
+      await fetchUsers();
     } catch (e) {
-      message.error('更新失败');
+      console.error('更新失败:', e);
+      message.error(`更新失败: ${e}`);
     }
   };
 
@@ -284,7 +322,7 @@ const UserList: React.FC = () => {
         <Input
           placeholder="搜索用户ID或邮箱"
           value={searchValue}
-          onChange={e => setSearchValue(e.target.value)}
+          onChange={(e: any) => setSearchValue(e.target.value)}
           style={{ width: 240 }}
         />
         <Select
@@ -459,9 +497,28 @@ const UserList: React.FC = () => {
             <Input value={selectedUser?.email} disabled />
           </Form.Item>
           <Form.Item name="avatar" label="头像">
-            <Input placeholder="请输入头像图片URL或上传" />
-            {/* 头像预览 */}
-            {editForm.getFieldValue('avatar') && <img src={editForm.getFieldValue('avatar')} alt="头像" style={{ width: 48, height: 48, borderRadius: '50%', marginTop: 8 }} />}
+            <div>
+              <Input placeholder="请输入头像图片URL" style={{ marginBottom: 8 }} />
+              <Upload
+                beforeUpload={handleAvatarUpload}
+                showUploadList={false}
+                accept="image/*"
+              >
+                <Button icon={<UploadOutlined />} loading={avatarUploading}>
+                  {avatarUploading ? '上传中...' : '上传头像'}
+                </Button>
+              </Upload>
+              {/* 头像预览 */}
+              {editForm.getFieldValue('avatar') && (
+                <div style={{ marginTop: 8 }}>
+                  <img
+                    src={editForm.getFieldValue('avatar')}
+                    alt="头像"
+                    style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover' }}
+                  />
+                </div>
+              )}
+            </div>
           </Form.Item>
           <Form.Item name="nickname" label="昵称">
             <Input placeholder="请输入昵称（非必填）" maxLength={20} />
@@ -470,11 +527,15 @@ const UserList: React.FC = () => {
             <Input placeholder="请输入手机号（非必填）" maxLength={20} />
           </Form.Item>
           <Form.Item name="gender" label="性别">
-            <Select allowClear placeholder="请选择性别">
-              <Select.Option value="male">男</Select.Option>
-              <Select.Option value="female">女</Select.Option>
-              <Select.Option value="other">其他</Select.Option>
-            </Select>
+            <Select
+              allowClear
+              placeholder="请选择性别"
+              options={[
+                { value: 'male', label: '男' },
+                { value: 'female', label: '女' },
+                { value: 'other', label: '其他' }
+              ]}
+            />
           </Form.Item>
           <Form.Item name="birthday" label="生日">
             <DatePicker style={{ width: '100%' }} placeholder="请选择生日（非必填）" />
@@ -485,7 +546,7 @@ const UserList: React.FC = () => {
         </Form>
       </Modal>
       <Modal open={resetPwdModal} title="重置用户密码" onCancel={()=>setResetPwdModal(false)} onOk={handleResetPwdSubmit} okText="保存" cancelText="取消">
-        <Input.Password value={newPwd} onChange={e=>setNewPwd(e.target.value)} placeholder="请输入新密码" />
+        <Input.Password value={newPwd} onChange={(e: any)=>setNewPwd(e.target.value)} placeholder="请输入新密码" />
       </Modal>
     </div>
   );

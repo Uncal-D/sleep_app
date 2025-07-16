@@ -1,0 +1,105 @@
+# 敏感文件和密钥
+**/serviceAccountKey.json
+**/google-services.json
+**/.env
+**/.env.local
+**/.env.production
+**/local.properties
+
+# Android
+android_app/app/build/
+android_app/build/
+android_app/.gradle/
+android_app/local.properties
+android_app/app/google-services.json
+*.apk
+*.aab
+*.dex
+*.class
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Web构建产物
+web_admin/build/
+web_admin/dist/
+web_admin/.env.local
+web_admin/.env.production
+
+# IDE文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 日志文件
+logs/
+*.log
+firebase-debug.log
+firebase-debug.*.log
+
+# 临时文件
+*.tmp
+*.temp
+.cache/
+
+# Firebase
+.firebase/
+.firebaserc
+
+# 构建产物
+build/
+dist/
+out/
+
+# 依赖目录
+node_modules/
+.pnp
+.pnp.js
+
+# 测试覆盖率
+coverage/
+*.lcov
+
+# 其他
+*.pid
+*.seed
+*.pid.lock
+.nyc_output
+.grunt
+bower_components
+.lock-wscript
+.npm
+.eslintcache
+.node_repl_history
+*.tgz
+.yarn-integrity
+.env.test
+.parcel-cache
+.next
+.nuxt
+.vuepress/dist
+.serverless
+.fusebox/
+.dynamodb/
+.tern-port
+.vscode-test
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*

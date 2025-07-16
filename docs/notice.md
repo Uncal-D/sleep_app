@@ -18,6 +18,22 @@
 - Kotlin/Gradle 相关配置要统一，优先通过 IDE 设置，避免手动改配置文件。
 - 遇到构建版本相关报错，优先查阅官方文档和社区 FAQ。
 
+### 2024-07-01 Kotlin JVM target: 21 构建错误彻底排查与修复经验
+- 问题描述：
+  - 构建时报错 `Unknown Kotlin JVM target: 21`，即使 build.gradle 中已设置 jvmTarget = '17'。
+- 排查过程：
+  1. 全面检查所有 build.gradle、gradle.properties 文件，确认未设置 jvmTarget=21。
+  2. 检查本地 JDK 版本，确保 Android Studio 配置为 JDK 17。
+  3. 发现问题根源为本地 Gradle/IDE 缓存残留了错误的 jvmTarget=21 设置。
+- 解决方法：
+  1. 在 Android Studio 中执行 File > Invalidate Caches / Restart，彻底清理缓存。
+  2. 手动删除 .gradle/、android_app/.gradle/、android_app/app/build/ 等缓存目录。
+  3. 重新编译，问题彻底解决。
+- 经验总结：
+  - 遇到 JVM target 报错，优先检查 build.gradle 和 JDK 版本。
+  - 若配置无误但依旧报错，99%是缓存问题，务必清理所有缓存再重试。
+  - 以后每次升级JDK或修改jvmTarget后，建议先清理缓存再编译。
+
 ---
 
 ## 2. Room 数据库与 DAO 查询问题
@@ -304,21 +320,282 @@ authorization code
 
 ---
 
-### 2024-07-01 Android 构建常见错误修复记录
+### 2024-07-01 Android Studio 构建错误排查与修复记录
 
 #### 问题1：未启用AndroidX导致构建失败
-- 报错信息：`Configuration :app:debugRuntimeClasspath contains AndroidX dependencies, but the android.useAndroidX property is not enabled...`
-- 解决方法：已在config/gradle.properties中确认并设置：
+- 检查config/gradle.properties，已确认：
   - android.useAndroidX=true
   - android.enableJetifier=true
 - 经验总结：所有新项目建议默认开启AndroidX，避免后续依赖冲突。
 
 #### 问题2：缺少google-services.json文件
-- 报错信息：`File google-services.json is missing...`
-- 解决方法：需从Firebase控制台下载google-services.json，放置于android_app/app/目录下。
-- 经验总结：集成Firebase等Google服务时，务必准备好配置文件。
+- 检查android_app/app/目录，未发现google-services.json。
+- 检查android_app/目录，发现google-services.json。
+- 解决方法：请将google-services.json从android_app/目录移动到android_app/app/目录下。
+- 经验总结：集成Firebase等Google服务时，务必准备好配置文件并放在正确目录。
 
 #### 问题3：依赖库重复（AndroidX与Support混用）
-- 报错信息：`Duplicate class android.support.v4.app.INotificationSideChannel found in modules core-1.12.0.aar ...`
-- 解决方法：已全局排查，项目gradle文件中未再发现com.android.support依赖，已统一为androidx。
+- 全局排查所有build.gradle文件，未发现com.android.support依赖，已统一为androidx。
 - 经验总结：依赖库必须统一，混用会导致编译冲突。建议用IDE自动迁移工具辅助检查。
+
+### 2024-07-01 AndroidX配置与依赖冲突彻底修复记录
+- 问题：Android Studio报错未启用AndroidX，且存在support-compat依赖冲突。
+- 处理：
+  1. 将android.useAndroidX=true和android.enableJetifier=true添加到android_app/gradle.properties，确保配置生效。
+  2. 在android_app/app/build.gradle中添加configurations.all { exclude ... }，强制排除所有com.android.support相关依赖。
+- 经验总结：
+  - AndroidX配置必须放在主工程gradle.properties，不能只放在config目录。
+  - 依赖冲突优先用exclude彻底排除老support库。
+
+### 2024-07-01 登录/注册异常提示优化经验
+- 问题描述：
+  - 登录和注册时，遇到账号不存在、密码错误、账号已存在、网络异常等情况，原先提示不友好，部分直接显示英文原文。
+- 解决方法：
+  1. 登录时根据异常类型，分别提示：账号不存在、密码错误、凭证失效、网络异常、其他异常。
+  2. 注册时根据异常类型，分别提示：账号已存在、密码不一致、字段为空、网络异常、注册成功等。
+  3. 所有提示均为中文，按钮超时自动恢复，体验媲美大厂。
+- 经验总结：
+  - 登录/注册等关键流程，必须对所有常见异常类型给出明确、友好的中文提示，不能直接显示英文原文。
+  - 按钮要有超时保护，避免卡死。
+  - 参考大厂产品体验，持续优化用户交互细节。
+
+---
+
+## 2025-07-16 Android应用关键问题解决记录
+
+### 问题1: ProfileEditActivity黑屏崩溃问题
+**现象**: 点击设置界面的铅笔图标后应用黑屏，提示ANR（应用无响应）
+**定位方法**:
+1. 添加全局异常处理器到SleepApp中
+2. 使用adb logcat查看详细崩溃日志
+3. 通过错误日志精确定位问题根源
+
+**根本原因**: ActionBar冲突
+```
+java.lang.IllegalStateException: This Activity already has an action bar supplied by the window decor.
+Do not request Window.FEATURE_SUPPORT_ACTION_BAR and set windowActionBar to false in your theme to use a Toolbar instead.
+```
+
+**解决方案**:
+1. 在AndroidManifest.xml中为ProfileEditActivity指定NoActionBar主题：
+   ```xml
+   <activity
+       android:name=".ui.ProfileEditActivity"
+       android:theme="@style/Theme.SleepApp.NoActionBar" />
+   ```
+2. 在setupToolbar()方法中添加异常处理
+3. 简化ProfileEditActivity，移除复杂的异步操作和头像上传功能
+
+### 问题2: 商城兑换按钮无响应问题
+**现象**: 点击商城界面的兑换按钮没有任何反应，无法打开兑换对话框
+**定位方法**:
+1. 在ProductAdapter、ShopFragment、RedeemDialogFragment、ShopViewModel中添加详细日志
+2. 通过日志序列判断问题发生的具体位置
+3. 使用Logcat过滤器：`ProductAdapter|ShopFragment|ShopViewModel|RedeemDialogFragment`
+
+**根本原因**: ProductAdapter中只设置了整个卡片的点击事件，没有为兑换按钮单独设置点击事件
+**解决方案**:
+```kotlin
+// 在ProductAdapter的ViewHolder中添加兑换按钮点击事件
+binding.btnRedeem.setOnClickListener {
+    val position = adapterPosition
+    if (position != RecyclerView.NO_POSITION) {
+        val product = getItem(position)
+        Log.d("ProductAdapter", "兑换按钮被点击: ${product.name}")
+        onProductClick(product)
+    }
+}
+```
+
+### 问题3: 主页布局不符合设计要求
+**现象**: 主页布局与用户提供的设计图不匹配
+**解决方案**: 完全按照用户要求重新设计主页布局
+**新布局结构**:
+1. 顶部标题栏："主页"
+2. 欢迎模块："欢迎使用睡眠积分奖励" + 当前日期
+3. 睡眠情况模块：达标状态 + 睡眠时间 + 起床时间 + 获得积分
+4. 倒计时："距离下次睡觉还有：XX:XX:XX"
+5. 精美古诗模块（随机显示古诗词）
+6. 底部导航栏
+
+### 问题4: 首次登录弹窗功能缺失
+**现象**: 应用首次启动时没有显示欢迎弹窗
+**解决方案**: 恢复HomeFragment中的欢迎弹窗功能
+```kotlin
+// 只在首次启动时显示欢迎弹窗
+if (com.example.sleepapp.ui.MainActivity.isFirstLaunch) {
+    showWelcomeDialog()
+    com.example.sleepapp.ui.MainActivity.isFirstLaunch = false
+}
+```
+
+### 系统化调试方法总结
+1. **添加详细日志**: 在关键流程的每个步骤添加Log.d()输出
+2. **异常捕获**: 使用try-catch包装可能出错的代码段
+3. **日志过滤**: 使用特定标签便于在Logcat中筛选相关信息
+4. **错误定位**: 通过日志序列判断问题发生的具体位置
+5. **系统化排查**: 从UI层到数据层逐层检查，定位问题根源
+
+### 编译错误修复经验
+**问题**: Kotlin导入冲突错误
+```
+Conflicting import, imported name 'Handler' is ambiguous
+```
+**解决方案**: 清理重复的导入语句，确保每个类只导入一次
+
+### 经验总结
+- **问题定位**: 通过添加详细日志和异常处理，可以快速定位问题根源
+- **系统化调试**: 按照UI层→业务层→数据层的顺序进行排查
+- **预防措施**: 在关键操作中添加异常处理，提高应用稳定性
+- **用户体验**: 及时修复影响用户操作的关键功能，如登录、兑换等
+- **代码质量**: 保持代码简洁，避免过度复杂的异步操作导致ANR
+
+---
+
+## 2025-07-16 数据同步功能完善记录
+
+### 数据库结构设计完善
+**目标**: 确保app上的所有数据都与数据库保持同步
+
+#### **1. 完善的数据库表结构设计**
+创建了完整的数据库结构文档 `docs/database_schema.md`，包含：
+
+**核心数据表**:
+- `users` - 用户表：包含用户基本信息、积分、连续天数等
+- `sleep_records` - 睡眠记录表：详细的睡眠数据记录
+- `products` - 商品表：商城商品信息
+- `redemption_records` - 兑换记录表：用户兑换历史
+- `points_history` - 积分流水表：所有积分变化记录
+- `app_settings` - 应用设置表：用户和全局设置
+
+**数据字段完善**:
+```sql
+-- 用户表新增字段
+avatar_url VARCHAR(500),           -- 头像URL
+sleep_status VARCHAR(20),          -- 睡眠状态
+max_streak INT,                    -- 最大连续天数
+last_login_at TIMESTAMP,           -- 最后登录时间
+timezone VARCHAR(50)               -- 时区
+
+-- 睡眠记录表新增字段
+sleep_quality VARCHAR(20),         -- 睡眠质量
+phone_usage_minutes INT,           -- 手机使用时长
+alarm_snooze_count INT,            -- 贪睡次数
+streak_bonus INT                   -- 连续奖励积分
+```
+
+#### **2. 数据模型优化**
+**User模型增强**:
+- 添加了Firebase PropertyName注解支持
+- 增加了睡眠状态、最大连续天数等字段
+- 保持向后兼容性
+
+**Product模型完善**:
+- 添加了库存管理、分类、排序等字段
+- 支持商品状态管理（上架/下架）
+- 增强了商品类型枚举
+
+**新增数据模型**:
+- `SleepRecordDto` - Firebase同步版本的睡眠记录
+- `RedemptionRecord` - 兑换记录模型
+- `PointsHistory` - 积分流水模型
+- `AppSetting` - 应用设置模型
+
+#### **3. 数据同步策略实现**
+**实时同步**:
+- 用户操作立即同步到Firebase
+- 积分变化实时更新并记录流水
+- 兑换操作立即生效
+
+**离线支持**:
+- 本地Room数据库缓存关键数据
+- 网络恢复后自动同步
+- 冲突解决：服务器数据优先
+
+**性能优化**:
+- 商品数据缓存机制
+- 分页加载历史记录
+- 异步数据同步避免阻塞UI
+
+#### **4. 核心功能实现**
+**用户数据管理**:
+```kotlin
+// 更新用户积分并记录流水
+suspend fun updateUserPoints(pointsChange: Int, description: String): Boolean
+
+// 更新用户连续天数
+suspend fun updateUserStreak(newStreak: Int): Boolean
+
+// 更新睡眠状态
+suspend fun updateUserSleepStatus(sleepStatus: String): Boolean
+```
+
+**商品兑换系统**:
+```kotlin
+// 完整的兑换流程
+suspend fun redeemProduct(product: Product, quantity: Int = 1): Boolean {
+    // 1. 检查积分是否足够
+    // 2. 检查库存
+    // 3. 创建兑换记录
+    // 4. 扣除积分并记录流水
+    // 5. 更新库存
+}
+```
+
+**数据同步机制**:
+```kotlin
+// 统一的数据同步接口
+suspend fun syncUserToFirebase(user: User): Boolean
+suspend fun syncSleepRecordToFirebase(sleepRecord: SleepRecordDto): String?
+suspend fun getUserFromFirebase(): User?
+```
+
+#### **5. 实现的同步功能**
+✅ **用户数据同步**：
+- 登录时自动同步用户信息
+- 实时更新积分、连续天数、睡眠状态
+- 记录最后登录时间
+
+✅ **睡眠记录同步**：
+- 睡眠数据实时上传到Firebase
+- 支持离线记录，网络恢复后同步
+- 详细的睡眠质量和行为数据
+
+✅ **商城数据同步**：
+- 商品信息从Firebase实时加载
+- 兑换记录完整追踪
+- 积分流水详细记录
+
+✅ **设置数据同步**：
+- 用户个人设置云端存储
+- 全局应用设置统一管理
+- 支持多设备同步
+
+#### **6. 数据完整性保证**
+**事务性操作**:
+- 兑换操作确保积分扣除和记录创建的原子性
+- 睡眠记录更新同时更新用户统计数据
+
+**数据验证**:
+- 积分不能为负数
+- 兑换前检查库存和积分余额
+- 数据类型和格式验证
+
+**错误处理**:
+- 网络异常时的重试机制
+- 数据冲突的解决策略
+- 详细的错误日志记录
+
+### 技术实现亮点
+1. **统一的数据访问层**: 通过Repository模式统一管理数据访问
+2. **异步数据同步**: 使用Kotlin协程实现非阻塞数据同步
+3. **缓存策略**: 本地缓存 + 云端同步的混合模式
+4. **数据一致性**: 确保本地和云端数据的一致性
+5. **扩展性设计**: 易于添加新的数据类型和同步规则
+
+### 后续优化方向
+- [ ] 实现数据同步状态指示器
+- [ ] 添加数据同步冲突解决UI
+- [ ] 实现增量数据同步
+- [ ] 添加数据导出功能
+- [ ] 实现多设备数据同步通知

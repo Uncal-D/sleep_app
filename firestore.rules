@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 管理员检查函数
+    function isAdmin() {
+      return exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    // 检查用户是否已认证
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // 检查是否为资源所有者
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    // 管理员集合规则
+    match /admins/{adminId} {
+      allow read, write: if isAuthenticated() && isOwner(adminId);
+    }
+    
+    // 用户集合规则
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      allow write: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      allow create: if isAuthenticated() && isOwner(userId);
+    }
+    
+    // 商品集合规则
+    match /products/{productId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+      allow create: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // 积分历史规则
+    match /pointsHistory/{historyId} {
+      allow read: if isAuthenticated() && 
+        (resource.data.userId == request.auth.uid || isAdmin());
+      allow write: if isAdmin();
+      allow create: if isAuthenticated() && 
+        (request.resource.data.userId == request.auth.uid || isAdmin());
+    }
+    
+    // 睡眠记录规则
+    match /sleepRecords/{recordId} {
+      allow read: if isAuthenticated() && 
+        (resource.data.userId == request.auth.uid || isAdmin());
+      allow write: if isAuthenticated() && 
+        (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+    }
+    
+    // 兑换记录规则
+    match /redemptions/{redemptionId} {
+      allow read: if isAuthenticated() && 
+        (resource.data.userId == request.auth.uid || isAdmin());
+      allow write: if isAuthenticated() && 
+        (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+    }
+    
+    // 拒绝所有其他访问
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

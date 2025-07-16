@@ -67,38 +67,7 @@
 ## 未来计划（Future Plans）
 - MySQL 相关迁移（如 `mysql_schema.sql`、`mysql_migration_guide.md`、`fix_mysql_schema.js` 等）已归档至 `/docs/` 和 `/scripts/`，**暂不纳入当前开发计划**，未来如需支持MySQL数据库再行推进。
 - 其他数据库适配、平台扩展、架构升级等内容也将在后续规划中逐步考虑。
-
----
-
-## Android 构建常见错误与解决办法（2024-07-01）
-
-### 1. 未启用AndroidX导致构建失败
-- 报错信息：`Configuration :app:debugRuntimeClasspath contains AndroidX dependencies, but the android.useAndroidX property is not enabled...`
-- 解决办法：
-  1. 打开`config/gradle.properties`文件。
-  2. 确认或添加如下内容：
-     ```
-     android.useAndroidX=true
-     android.enableJetifier=true
-     ```
-  3. 保存后重新编译。
-
-### 2. 缺少google-services.json文件
-- 报错信息：`File google-services.json is missing...`
-- 解决办法：
-  1. 登录Firebase控制台，下载`google-services.json`。
-  2. 放到`android_app/app/`目录下。
-  3. 重新编译。
-
-### 3. 依赖库重复（AndroidX与Support混用）
-- 报错信息：`Duplicate class android.support.v4.app.INotificationSideChannel found...`
-- 解决办法：
-  1. 检查所有`build.gradle`文件，移除所有`com.android.support`相关依赖，统一为`androidx`。
-  2. 可用Android Studio的"Refactor > Migrate to AndroidX"自动迁移。
-  3. 保证所有依赖库风格一致。
-
-> 如遇其他构建相关问题，优先查阅本节内容和`docs/notice.md`问题记录。
-
+- 后期可以分为会员和非会员，会员可以获取积分，进行商品兑换，非会员只有普通功能，不可以兑换商品。
 ---
 
 > 本项目结构已全面规范化，便于团队协作、维护和扩展。如有疑问请查阅本文件或联系维护者。
