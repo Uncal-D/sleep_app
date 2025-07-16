@@ -415,8 +415,8 @@ A: 在Firestore的 `admins` 集合中添加新文档，文档ID为用户的UID�
 
 ## 📞 联系方式
 
-- 项目维护者: [Your Name]
-- 邮箱: your.email@example.com
+- 项目维护者: UncalD
+- 邮箱: dave_u77582@163.com
 - 项目链接: [https://github.com/yourusername/sleep_app](https://github.com/yourusername/sleep_app)
 
 ## 🙏 致谢
